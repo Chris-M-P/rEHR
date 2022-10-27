@@ -93,7 +93,7 @@ simulate_ehr_patients <- function(ehr_def){
     assert_that(inherits(ehr_def, "EHR_definition"))
     ## Define birthday, sex, practid, patid
     get_patients <- function(pat_num){
-        tbl_df(data.frame(birthday = random_dates(pat_num, 
+      tibble::as_tibble(data.frame(birthday = random_dates(pat_num, 
                                                   ehr_def$start_date, 
                                                   ehr_def$end_date))) %>%
             mutate(yob = as.integer(format(birthday, format = "%Y")) - 1800,
@@ -176,7 +176,7 @@ simulate_ehr_practices <- function(ehr_def){
     uts[lts] <- uts[lts] + floor(runif(ehr_def$practice$num, 0, 
                                        ehr_def$practice$early_lcd_range) * 365.25)[lts]
     lcd[lcd <= uts] <- ehr_def$end_date
-    tbl_df(data.frame(practid = 1:ehr_def$practice$num,
+    tibble::as_tibble(data.frame(practid = 1:ehr_def$practice$num,
                       region = region,
                       lcd = lcd,
                       uts = uts,
